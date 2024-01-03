@@ -1,18 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Timer from './timer';
 
+const App: React.FC = () => {
+  const [inputSeconds, setInputSeconds] = useState('');
+  const [startTimer, setStartTimer] = useState(false);
 
-import './App.css';
-import CountDown from './timer';
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputSeconds(event.target.value);
+  };
 
-function App() {
-  
+  const handleStartTimer = () => {
+    setStartTimer(true);
+  };
+
   return (
-    <div className="App">
-      <h1>Timer</h1>
-      <label htmlFor="initialTime">Set Initial Time (seconds):</label>
-   <CountDown initialTime={100} />
+    <div>
+      <h1>Timer App</h1>
+      <label htmlFor="inputSeconds">Enter Seconds:</label>
+      <input
+        type="number"
+        id="inputSeconds"
+        value={inputSeconds}
+        onChange={handleInputChange}
+        placeholder="Enter seconds"
+      />
+      <button onClick={handleStartTimer}>Start Timer</button>
+      {startTimer && <Timer initialSeconds={parseInt(inputSeconds, 10) || 0} />}
     </div>
   );
-}
+};
 
 export default App;
